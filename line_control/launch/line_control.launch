@@ -1,0 +1,15 @@
+<launch>
+
+   <node pkg = "line_control" type = "line_control_node" name = "line_control" output = "screen">
+   
+    <param name = "line_topic"              type = "string"      value = "/tsl1401cl"/>     
+   <param name = "line_cmd_vel_topic"       type = "string"      value = "/cmd_vel/line"/>
+
+   <param name = "Kp_line"             type = "string"      value = "/Kp_line"/>
+   <param name = "Kd_line"             type = "double"      value = "0.005"/>
+   <param name = "Ki_line"             type = "double"      value = "0.0"/>
+   <param name = "line_centroid_topic"      type = "string"      value = "/line_centroid"/>
+   
+   </node>
+   
+</launch>

@@ -1,0 +1,15 @@
+<launch>
+   <node pkg = "wall_following" type = "wall_following_node" name = "wall_following" output = "screen">
+   
+   <param name = "front_sonar_topic"          type = "string"      value = "/range_front"/>   
+   <param name = "left_sonar_topic"          type = "string"      value = "/range_front_left"/>
+   <param name = "right_sonar_topic"          type = "string"      value = "/range_front_right"/>  
+   <param name = "sonar_cmd_vel_topic"       type = "string"      value = "/cmd_vel/sonar"/> 
+   <param name = "control_speed_sonar_topic"    type = "string"      value = "/control_speed/sonar"/> 
+   
+   <param name = "Kp_wall"             type = "double"      value = "0.2"/>
+   <param name = "Kd_wall"             type = "double"      value = "0.8"/>
+   <param name = "Ki_wall"             type = "double"      value = "0.0"/>
+   
+   </node>
+</launch>
