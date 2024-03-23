@@ -1,0 +1,24 @@
+<launch>
+
+   <node pkg = "move_waypoint" type = "move_waypoint_node" name = "move_waypoint" output = "screen">
+   
+   <param name = "status_waypoint_move_topic"   type = "string"      value = "/status/waypoint_move"/>
+   <param name = "poseupdate_topic"             type = "string"      value = "/poseupdate"/>
+   <param name = "target_waypoint_topic"        type = "string"      value = "/target_waypoint"/>
+   <param name = "target_waypoint_new_topic"    type = "string"      value = "/target_waypoint_new"/>
+   <param name = "flag_control_topic"           type = "string"      value = "/flag/waypoint_control"/>
+   <param name = "target_yaw_topic"             type = "string"      value = "/target_yaw/radian"/>
+   <param name = "target_yaw_degree_topic"      type = "string"      value = "/target_yaw/degree"/>
+   <param name = "type_cmd_vel_topic"           type = "string"      value = "/type_cmd_vel"/>
+   <param name = "target_waypoint_line"         type = "string"      value = "/wp/target_waypoint_line"/>
+   <param name = "move_base_simple_goal_topic"  type = "string"      value = "/move_base_simple/goal"/>
+   <param name = "target_waypoint_goal_topic"   type = "string"      value = "/target_waypoint_goal"/>
+   <param name = "move_target_topic"            type = "string"      value = "/move_target"/>
+   <param name = "target_waypoint_line_topic"   type = "string"      value = "/wp/target_waypoint_line"/>
+   
+   <param name = "control_speed_yaw_topic"      type = "double"      value = "0.2"/>
+   <param name = "K_xte"                        type = "double"      value = "0.2"/>
+
+   </node>
+   
+</launch>
