@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="car_control" type="car_control_node" name="car_control_node" output="screen">
+		<param name = "speed_factor"   type = "double"    value  = "255" />
+		<param name = "steer_factor"  type = "double"     value  = "20"/>
+ </node> 
+  
+</launch>
