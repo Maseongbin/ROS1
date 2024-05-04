@@ -20,7 +20,7 @@
 static const char *deviceName = "/dev/i2c-0";
 
 #define MAX_R_ANGLE -50
-#define MAX_L_ANGLE 50
+#define MAX_L_ANGLE 30
 
 #define MAX_ROBOT_SPEED  250
 #define MIN_ROBOT_SPEED  -250
