@@ -87,11 +87,11 @@ void *read_I2C_thread(void *pt)
          {
             if((received_data[0] == 'D') && (received_data[5] == '*'))
             {
-				encoder_pulse.byte_data[0] = received_data[1];
-				encoder_pulse.byte_data[1] = received_data[2];
-				encoder_pulse.byte_data[2] = received_data[3];
-				encoder_pulse.byte_data[3] = received_data[4];
-			}
+	        encoder_pulse.byte_data[0] = received_data[1];
+		encoder_pulse.byte_data[1] = received_data[2];
+		encoder_pulse.byte_data[2] = received_data[3];
+		encoder_pulse.byte_data[3] = received_data[4];
+	    }
          }
       sleep(100);
       }
@@ -107,23 +107,23 @@ void cmd_callback(const geometry_msgs::Twist & cmd_vel)
 
     if(angular_temp <= MAX_R_ANGLE)  
     {
-		angular_temp = MAX_R_ANGLE;
-	}
+	angular_temp = MAX_R_ANGLE;
+    }
     if(angular_temp >= MAX_L_ANGLE)
     {
-		angular_temp = MAX_L_ANGLE;
-	}
+	angular_temp = MAX_L_ANGLE;
+    }
 	  
     steering_angle.data  = (short)angular_temp;
        
     if(linear_temp >=  MAX_ROBOT_SPEED)
     {
-		linear_temp = MAX_ROBOT_SPEED;
-	}
+        linear_temp = MAX_ROBOT_SPEED;
+    }
     if(linear_temp <=  MIN_ROBOT_SPEED)
     {
-		linear_temp = MIN_ROBOT_SPEED;
-	}
+	linear_temp = MIN_ROBOT_SPEED;
+    }
 
     motor_speed.data = (short)linear_temp;
 }
@@ -134,12 +134,12 @@ int main(int argc, char **argv)
   
   if(file_I2C < 0)
   {
-	  printf("Unable to open I2C\n");
-	  return -1;
+      printf("Unable to open I2C\n");
+      return -1;
   }
   else
   {
-	  printf("I2C is Connected\n");
+      printf("I2C is Connected\n");
   }
  
   ros::init(argc, argv, "car_control_node");
@@ -171,10 +171,10 @@ int main(int argc, char **argv)
 	read(file_I2C, received_data, 6);
 	if((received_data[0] == 'D') && (received_data[5] == '*'))
 	{
-		encoder_pulse.byte_data[0] = received_data[1];
-        encoder_pulse.byte_data[1] = received_data[2];
-        encoder_pulse.byte_data[2] = received_data[3];
-        encoder_pulse.byte_data[3] = received_data[4];
+	    encoder_pulse.byte_data[0] = received_data[1];
+            encoder_pulse.byte_data[1] = received_data[2];
+            encoder_pulse.byte_data[2] = received_data[3];
+            encoder_pulse.byte_data[3] = received_data[4];
 	}
 	printf("encoder_pulse.data : %d \n\n", encoder_pulse.data);
 	
