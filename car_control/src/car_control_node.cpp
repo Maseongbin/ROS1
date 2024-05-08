@@ -36,7 +36,15 @@ union
     char byte_data[2];
 } steering_angle, motor_speed;
 
+union
+{
+    short data;
+    char byte_data[4];
+} encoder_pulse;
+
+
 unsigned char protocal_data[9] ={0,};
+unsigned char received_data[7]  ={0,};
 
 double speed_factor = 255;
 double steer_factor = 20;
@@ -68,6 +76,26 @@ void close_I2C(int fd)
    close(fd);
 }
 
+void *read_I2C_thread(void *pt)
+{
+      int num_bytes = -1;
+      //unsigned char insert_buf;
+     
+      while(1)
+      {
+         while(num_bytes = read(file_I2C, received_data, 6) > 0)
+         {
+            if((received_data[0] == 'D') && (received_data[5] == '*'))
+            {
+				encoder_pulse.byte_data[0] = received_data[1];
+				encoder_pulse.byte_data[1] = received_data[2];
+				encoder_pulse.byte_data[2] = received_data[3];
+				encoder_pulse.byte_data[3] = received_data[4];
+			}
+         }
+      sleep(100);
+      }
+}
 
 void cmd_callback(const geometry_msgs::Twist & cmd_vel)
 {
@@ -125,20 +153,30 @@ int main(int argc, char **argv)
  
   while(ros::ok())
   {
-	protocal_data[0] = '#';
-	protocal_data[1] = 'C';
-	protocal_data[2] = steering_angle.byte_data[0];
-	protocal_data[3] = steering_angle.byte_data[1];
-	protocal_data[4] = motor_speed.byte_data[0];
-	protocal_data[5] = motor_speed.byte_data[1];
-	protocal_data[6] = 0;  
-	protocal_data[7] = 0;    
-	protocal_data[8] = '*';
+	  protocal_data[0] = '#';
+	  protocal_data[1] = 'C';
+	  protocal_data[2] = steering_angle.byte_data[0];
+	  protocal_data[3] = steering_angle.byte_data[1];
+	  protocal_data[4] = motor_speed.byte_data[0];
+	  protocal_data[5] = motor_speed.byte_data[1];
+	  protocal_data[6] = 0;  
+	  protocal_data[7] = 0;    
+	  protocal_data[8] = '*';
    
 	write(file_I2C, protocal_data, 9);
 	
-	printf("motor_speed.data : %d\n", motor_speed.data);
-	printf("steering_angle.data : %d \n\n", steering_angle.data);
+	//printf("motor_speed.data : %d\n", motor_speed.data);
+	//printf("steering_angle.data : %d \n\n", steering_angle.data);
+	
+	read(file_I2C, received_data, 6);
+	if((received_data[0] == 'D') && (received_data[5] == '*'))
+	{
+		encoder_pulse.byte_data[0] = received_data[1];
+        encoder_pulse.byte_data[1] = received_data[2];
+        encoder_pulse.byte_data[2] = received_data[3];
+        encoder_pulse.byte_data[3] = received_data[4];
+	}
+	printf("encoder_pulse.data : %d \n\n", encoder_pulse.data);
 	
 	ros::spinOnce();
 	loop_rate.sleep();
